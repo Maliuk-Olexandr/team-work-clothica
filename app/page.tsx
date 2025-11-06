@@ -1,1 +1,0 @@
-<button className="btn-prymary trg"></button>
