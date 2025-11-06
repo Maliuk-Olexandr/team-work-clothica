@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'ac.goit.global',
+        hostname: 'ftp.goit.study',
       },
     ],
   },
