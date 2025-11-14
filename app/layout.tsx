@@ -1,34 +1,68 @@
-import type { Metadata } from "next";
-import { Nunito_Sans, Inter } from "next/font/google";
-import "modern-normalize/modern-normalize.css";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter, Nunito_Sans } from 'next/font/google';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
+import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
+import AuthProvider from '@/components/AuthProvider/AuthProvider';
+// import 'modern-normalize/modern-normalize.css'; <--doesn't work(creates style override issues)
+import './globals.css';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Toaster } from 'react-hot-toast';
 
-
-const nunito = Nunito_Sans({
-  subsets: ['cyrillic'], // обери потрібні підмножини
-  weight: ['400'], // обери потрібні ваги
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600'],
   display: 'swap',
 });
-const inter = Inter({
-  subsets: ['cyrillic'], // обери потрібні підмножини
-  weight: ['400', '500', '600'], // обери потрібні ваги
+
+const nunito = Nunito_Sans({
+  variable: '--font-nunito',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400'],
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Clothica Team Work',
-  description: 'A platform for team collaboration and project management.',
+  title: 'Clothica',
+  description: 'Online clothing store',
+  keywords: ['clothing', 'fashion', 'store'],
+  openGraph: {
+    type: 'website',
+    title: 'Clothica',
+    description: 'Online clothing store',
+    // url: 'https://[].vercel.app',
+    siteName: 'Clothica',
+    images: [
+      {
+        url: '',
+        width: 1200,
+        height: 630,
+        alt: 'Clothica - Online clothing store',
+      },
+    ],
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: {
+  modal,
+}: Readonly<{
   children: React.ReactNode;
-}) {
+  modal: React.ReactNode;
+}>) {
   return (
     <html lang="uk">
-      <body className={`${nunito.className} ${inter.className}`}>
-        {children}
+      <body className={`${inter.variable} ${nunito.variable}`}>
+        <TanStackProvider>
+          <AuthProvider>
+            {children}
+            {modal}
+          </AuthProvider>
+          <ReactQueryDevtools />
+          {/*^^DELETE THIS ON PRODUCTION*/}
+        </TanStackProvider>
+        <Toaster />
       </body>
     </html>
   );
