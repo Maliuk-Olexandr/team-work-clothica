@@ -6,14 +6,15 @@ import Link from 'next/link';
 import styles from './Header.module.css';
 import MobileMenu from '../MobileMenu/MobileMenu';
 import { useAuthStore } from '@/lib/store/authStore';
-import { link } from 'fs';
 import Image from 'next/image';
 import '@/app/globals.css';
+import { useCartStore } from '@/lib/store/cartStore';
 
 const Header: React.FC = () => {
   const { isAuthenticated, logout } = useAuthStore();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const router = useRouter();
+  const { items } = useCartStore();
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'auto';
@@ -73,7 +74,6 @@ const Header: React.FC = () => {
             className={`btn btn-circle ${styles.burgerBtn}`}
             aria-label="Відкрити меню"
             onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}>
-            {/* <div> */}
             {!isMobileMenuOpen ? (
               <svg width={24} height={24}>
                 <use
@@ -85,26 +85,18 @@ const Header: React.FC = () => {
                 <use href="/sprite.svg#close" />
               </svg>
             )}
-            {/* <Icon
-              name="menu" // icon-burger
-              sizeH={24}
-              sizeW={24}
-            /> */}
-            {/* </div> */}
+            
           </button>
-          <button className={`btn btn-circle ${styles.cartCircle}`}>
             <Link
               href="/basket"
               className={`btn-round ${styles.cartLink}`}
               aria-label="Кошик">
-              {/* <div> */}
               <svg className={styles.cartIcon} width={24} height={24}>
                 <use href="/sprite.svg#shopping_cart"></use>
               </svg>
-              {/* </div> */}
+              <span className={styles.cartBadge}>{items.length}</span>
             </Link>
-            <span className={styles.cartBadge}>1</span>
-          </button>
+            
         </div>
       </div>
       <MobileMenu

@@ -67,13 +67,14 @@ export interface FetchOrdersResponse {
 
 //GET fetch all orders
 export async function fetchAllOrders(): Promise<FetchOrdersResponse> {
-  return (await internalApi.get<FetchOrdersResponse>('orders')).data;
+  return (await internalApi.get<FetchOrdersResponse>('/orders')).data;
 }
 
 //GET fetch order by id
 export async function fetchOrderById(orderId: string) {
-  return (await internalApi.get<Order>(`orders/${orderId}`)).data;
+  return (await internalApi.get<Order>(`/orders/${orderId}`)).data;
 }
+
 
 export interface FetchCategoriesParams {
   page?: number;
@@ -85,7 +86,7 @@ export interface FetchCategoriesResponse {
   perPage: number;
   totalCategories: number;
   totalPages: number;
-  catedories: Category[];
+  categories: Category[];
 }
 
 //GET categories
@@ -93,7 +94,7 @@ export async function fetchCategories(
   params: FetchCategoriesParams
 ): Promise<FetchCategoriesResponse> {
   return (
-    await internalApi.get<FetchCategoriesResponse>('categories', { params })
+    await internalApi.get<FetchCategoriesResponse>('/categories', { params })
   ).data;
 }
 
@@ -117,6 +118,6 @@ export async function fetchFeedbacks(
   params: FetchFeedbacksParams
 ): Promise<FetchFeedbacksParams> {
   return (
-    await internalApi.get<FetchFeedbacksResponse>('feedbacks', { params })
+    await internalApi.get<FetchFeedbacksResponse>('/feedbacks', { params })
   ).data;
 }

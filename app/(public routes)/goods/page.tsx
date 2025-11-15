@@ -7,3 +7,12 @@ export default function GoodsPage() {
     </div>
   );
 }
+
+// export default function GoodsPage({ searchParams }: { searchParams: any }) {
+//   const categoryId = searchParams.category;
+
+//   // виклик API з фільтром
+//   const goods = await fetchGoods({ category: categoryId });
+
+//   return <GoodsList goods={goods} />;
+// }
